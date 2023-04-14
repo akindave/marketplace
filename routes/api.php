@@ -30,13 +30,12 @@ Route::prefix('v1')->group(function () {
 
     Route::controller(AuthController::class)->group(function () {
         Route::post('auth/login/with/emailpass', 'loginEmailPass');
-        Route::post('auth/register', 'register');
+        Route::post('auth/register/customer', 'registerCustomer');
+        Route::post('auth/register/seller', 'registerShopOwners');
 
         // Route::post('confirm/email', 'confirmEmail');
         // Route::post('verify/email', 'verifyEmail');
         // Route::post('check/email', 'checkEmail');
         // Route::post('auth/reset/password', 'resetPassword');
-
-
     });
 });

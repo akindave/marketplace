@@ -39,7 +39,7 @@ class AuthController extends BaseController
         }
     }
 
-    public function register(Request $request)
+    public function registerCustomer(Request $request)
     {
          // Retrieve the validated input data...
          $validator = Validator::make($request->all(), [
@@ -64,6 +64,36 @@ class AuthController extends BaseController
         $success['user'] =  $user;
 
         return $this->sendResponse($success, 'User register successfully.');
+
+    }
+
+    //this is to register the shop owners
+    public function registerShopOwners(Request $request)
+    {
+         // Retrieve the validated input data...
+         $validator = Validator::make($request->all(), [
+            'first_name' => 'required',
+            'second_name' => 'required',
+            'email' => 'sometimes|email|unique:users',
+            'password' => 'required|min:8',
+            'mobile_number' => 'required|unique:users',
+            'code' => 'required'
+        ]);
+
+        if ($validator->fails()) {
+            return $this->sendError('Validation Error.', $validator->errors());
+        }
+
+        $input = $request->all();
+        $input['password'] = Hash::make($input['password']);
+        $input['isVerified'] = true;
+        $input['email_verified_at'] = Carbon::now();
+        $input['user_category_id'] = 2;
+        $user = User::create($input);
+        $success['token'] =  $user->createToken('oshoffa')->plainTextToken;
+        $success['user'] =  $user;
+
+        return $this->sendResponse($success, 'Shop owner register successfully.');
 
     }
     //
