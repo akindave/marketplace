@@ -39,11 +39,11 @@ class AuthController extends BaseController
         }
     }
 
-    public function registerCustomer(Request $request)
+    public function registerUser(Request $request)
     {
          // Retrieve the validated input data...
          $validator = Validator::make($request->all(), [
-            'username' => 'required',
+            'username' => 'required|unique:users',
             'email' => 'sometimes|email|unique:users',
             'password' => 'required|min:8',
             'mobile_number' => 'required|unique:users',
@@ -54,7 +54,7 @@ class AuthController extends BaseController
             return $this->sendError('Validation Error.', $validator->errors());
         }
 
-        $input = $request->all();
+        $input = $validator->validated();
         $input['password'] = Hash::make($input['password']);
         $input['isVerified'] = true;
         $input['email_verified_at'] = Carbon::now();

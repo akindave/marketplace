@@ -13,33 +13,32 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('first_name')->nullable();
-            $table->string('last_name')->nullable();
-            $table->string('username')->nullable();
+            $table->string('username')->unique();
             $table->string('mobile_number')->unique();
             $table->string('email')->unique()->nullable();
             $table->string('user_category_id');
-            $table->string('gender')->nullable();
-            $table->string('address')->nullable();
-            $table->string('name_of_org')->nullable();
-            $table->string('recommendation')->nullable();
-            $table->longText('org_logo')->nullable();
-            $table->longText('bio')->nullable();
             $table->longText('account_balance')->default(0);
             $table->boolean('isVerified')->default(false);
-            $table->string('country')->nullable();
-            $table->string('state')->nullable();
-            $table->string('city')->nullable();
-            $table->string('church')->nullable();
             $table->string('code');
-            $table->string('profile_pics')->nullable();
             $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
             $table->integer('has_pin')->nullable();
             $table->string('transaction_pin')->nullable();
+            $table->string('password');
             $table->softDeletes();
             $table->rememberToken();
             $table->timestamps();
+
+
+            // $table->string('name_of_org')->nullable();
+            // $table->string('recommendation')->nullable();
+            // $table->longText('bio')->nullable();
+            // $table->longText('org_logo')->nullable();
+            // $table->string('country')->nullable();
+            // $table->string('state')->nullable();
+            // $table->string('city')->nullable();
+
+
+
         });
     }
 

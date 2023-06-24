@@ -11,12 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('colors', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->string('color');
-            $table->string('code');
-            $table->string('slug');
+        Schema::create('product_categories', function (Blueprint $table) {
+            $table->id();
+            $table->string('slug')->unique('slug');
+            $table->string('category_name');
+            $table->string('category_icon');
+            $table->tinyInteger('status')->default(0);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
@@ -25,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('colors');
+        Schema::dropIfExists('product_categories');
     }
 };
